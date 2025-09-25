@@ -1,130 +1,89 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HovanPhat - Ultimate Portfolio</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{overflow:hidden;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#000;color:#fff;cursor:none;}
-canvas#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu bản thân</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-/* Container */
-.container{max-width:1000px;margin:auto;padding:50px 20px;text-align:center;position:relative;z-index:1;}
-h1{font-size:3em;color:#0ff;text-shadow:0 0 10px #0ff,0 0 20px #0ff;animation:glow 2s infinite alternate;}
-@keyframes glow{0%{text-shadow:0 0 5px #0ff;}50%{text-shadow:0 0 20px #0ff,0 0 40px #0ff;}100%{text-shadow:0 0 5px #0ff;}}
-.rainbow{background:linear-gradient(90deg,red,orange,yellow,green,cyan,blue,violet);-webkit-background-clip:text;color:transparent;animation:rainbowAnim 5s linear infinite;}
-@keyframes rainbowAnim{0%{background-position:0%;}100%{background-position:100%;}}
-#intro{font-size:1.2em;min-height:150px;margin:20px 0;white-space:pre-wrap;text-align:center;}
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        }
 
-/* Cards */
-.skills,.projects{display:flex;flex-wrap:wrap;justify-content:center;margin:30px 0;}
-.skill-card,.project-card{background: rgba(255,255,255,0.05);margin:10px;padding:20px;border-radius:15px;transition: all 0.3s;cursor:pointer;text-align:center;backdrop-filter:blur(5px);}
-.skill-card:hover{transform:translateY(-15px) rotateZ(5deg);box-shadow:0 0 25px #ff00ff;text-shadow:0 0 10px #ff0;}
-.project-card:hover{transform:translateY(-15px) rotateZ(-5deg);box-shadow:0 0 25px #0ff;text-shadow:0 0 10px #0ff;}
+        h1 {
+            color: #333;
+        }
 
-/* Socials */
-.socials{margin-top:30px;}
-.socials a{margin:0 10px;font-size:2em;color:#fff;transition: transform 0.3s,color 0.3s;}
-.socials a:hover{transform:scale(1.5) rotate(10deg);color:#ff0;}
+        p {
+            color: #555;
+        }
 
-/* Popup */
-.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;justify-content:center;align-items:center;z-index:10;}
-.popup-content{background:#111;padding:20px;border-radius:15px;width:90%;max-width:500px;text-align:left;position:relative;box-shadow:0 0 25px #0ff;}
-button.close-btn{background:#f00;border:none;color:#fff;padding:5px 10px;border-radius:5px;cursor:pointer;float:right;}
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+            text-align: left;
+        }
 
-/* Cursor */
-#cursor{position:absolute;width:15px;height:15px;background:#0ff;border-radius:50%;pointer-events:none;mix-blend-mode:screen;box-shadow:0 0 10px #0ff;transition:transform 0.05s linear;}
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-/* Responsive */
-@media(max-width:600px){h1{font-size:2em;}.project-card,.skill-card{width:150px;}}
-</style>
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <div class="card">
+        <h1 id="name">Xin chào!</h1>
+        <p id="age">Tuổi: </p>
+        <p id="job">Nghề nghiệp: </p>
+        <p>Sở thích:</p>
+        <ul id="hobbies"></ul>
+        <button onclick="introduce()">Giới thiệu bản thân</button>
+    </div>
 
-<canvas id="bgCanvas"></canvas>
-<div id="cursor"></div>
+    <script>
+        const myInfo = {
+            name: "Nguyễn Văn A",
+            age: 25,
+            job: "Developer",
+            hobbies: ["Coding", "Reading", "Gaming"]
+        };
 
-<div class="container">
-<h1 class="rainbow">HovanPhat</h1>
-<div id="intro"></div>
+        function introduce() {
+            document.getElementById("name").innerText = `Xin chào! Mình là ${myInfo.name}`;
+            document.getElementById("age").innerText = `Tuổi: ${myInfo.age}`;
+            document.getElementById("job").innerText = `Nghề nghiệp: ${myInfo.job}`;
 
-<div class="skills">
-<div class="skill-card">JavaScript</div>
-<div class="skill-card">Python</div>
-<div class="skill-card">C++</div>
-<div class="skill-card">HTML & CSS</div>
-<div class="skill-card">AI / ML</div>
-<div class="skill-card">Automation</div>
-</div>
-
-<h2>Dự án nổi bật</h2>
-<div class="projects">
-<div class="project-card" onclick="showPopup('Bot Discord 24/7')">Bot Discord</div>
-<div class="project-card" onclick="showPopup('Game Tài Xỉu nâng cao')">Game Tài Xỉu</div>
-<div class="project-card" onclick="showPopup('Portfolio Web siêu xịn')">Portfolio Web</div>
-</div>
-
-<div class="socials">
-<a href="#" title="GitHub">&#xf09b;</a>
-<a href="#" title="LinkedIn">&#xf08c;</a>
-<a href="#" title="Email">&#xf0e0;</a>
-</div>
-</div>
-
-<div class="popup" id="popup">
-<div class="popup-content">
-<button class="close-btn" onclick="closePopup()">Đóng</button>
-<div id="popup-text"></div>
-</div>
-</div>
-
-<script>
-// Typewriter intro
-const introLines=[
-"Xin chào, tôi là HovanPhat",
-"Cấp độ: Bậc thầy lập trình 💻",
-"Ngôn ngữ ưa thích: JavaScript, Python, C++",
-"Kỹ năng: AI, Bot Discord, Game, Web, Automation",
-"Thành tích: Xây dựng dự án nâng cao, giải thuật phức tạp",
-"Sở thích: Code mọi lúc mọi nơi, khám phá công nghệ mới 🚀",
-"Hãy theo dõi tôi để cùng tạo ra những điều phi thường!"
-];
-const introEl=document.getElementById("intro");
-async function typeWriter(text,el,delay=50){for(let i=0;i<text.length;i++){el.textContent+=text.charAt(i);await new Promise(r=>setTimeout(r,delay));}el.textContent+='\n';}
-async function showIntro(){for(let line of introLines) await typeWriter(line,introEl);}
-showIntro();
-
-// Popup projects
-const popup=document.getElementById("popup");
-const popupText=document.getElementById("popup-text");
-function showPopup(project){popup.style.display="flex";popupText.textContent="Thông tin dự án: "+project;launchConfetti();}
-function closePopup(){popup.style.display="none";}
-
-// Background particles + confetti
-const canvas=document.getElementById("bgCanvas");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-let particles=[];
-const colors=['#0ff','#f0f','#ff0','#f00','#0f0','#00f'];
-class Particle{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-0.5)*2;this.vy=(Math.random()-0.5)*2;this.radius=Math.random()*3+1;this.color=colors[Math.floor(Math.random()*colors.length)];this.alpha=Math.random()*0.5+0.5;}
-draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();}
-update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width)this.vx*=-1;if(this.y<0||this.y>canvas.height)this.vy*=-1;this.draw();}}
-for(let i=0;i<300;i++) particles.push(new Particle());
-function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>p.update());requestAnimationFrame(animate);}
-animate();
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-
-// Confetti
-function launchConfetti(){for(let i=0;i<100;i++){setTimeout(()=>{const c=new Particle();c.vx=(Math.random()-0.5)*5;c.vy=(Math.random()-1.5)*5;c.radius=Math.random()*4+2;particles.push(c);setTimeout(()=>{particles.splice(particles.indexOf(c),1);},3000);},i*10);}}
-
-// Cursor follow
-const cursor=document.getElementById('cursor');
-let mouse={x:canvas.width/2,y:canvas.height/2};
-window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
-function updateCursor(){cursor.style.transform=`translate(${mouse.x-7.5}px,${mouse.y-7.5}px)`;requestAnimationFrame(updateCursor);}
-updateCursor();
-</script>
-
+            const hobbiesList = document.getElementById("hobbies");
+            hobbiesList.innerHTML = ""; // Xoá nội dung cũ
+            myInfo.hobbies.forEach(hobby => {
+                const li = document.createElement("li");
+                li.textContent = hobby;
+                hobbiesList.appendChild(li);
+            });
+        }
+    </script>
 </body>
 </html>
