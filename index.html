@@ -1,89 +1,110 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giới thiệu bản thân</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f4f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giới thiệu bản thân 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+    overflow: hidden;
+  }
 
-        .card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-        }
+  .intro-container {
+    text-align: center;
+    max-width: 500px;
+    padding: 40px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-out;
+  }
 
-        h1 {
-            color: #333;
-        }
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+  }
 
-        p {
-            color: #555;
-        }
+  .avatar:hover {
+    transform: scale(1.1);
+  }
 
-        ul {
-            list-style-type: square;
-            padding-left: 20px;
-            text-align: left;
-        }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: none;
-            background: #007bff;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+  p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
 
-        button:hover {
-            background: #0056b3;
-        }
-    </style>
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  ul li {
+    background: rgba(255,255,255,0.2);
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: 0.3s;
+  }
+
+  ul li:hover {
+    background: rgba(255,255,255,0.4);
+  }
+
+  @keyframes fadeIn {
+    0% {opacity: 0; transform: translateY(30px);}
+    100% {opacity: 1; transform: translateY(0);}
+  }
+</style>
 </head>
 <body>
-    <div class="card">
-        <h1 id="name">Xin chào!</h1>
-        <p id="age">Tuổi: </p>
-        <p id="job">Nghề nghiệp: </p>
-        <p>Sở thích:</p>
-        <ul id="hobbies"></ul>
-        <button onclick="introduce()">Giới thiệu bản thân</button>
-    </div>
+  <div class="intro-container">
+    <img class="avatar" src="https://i.pravatar.cc/120" alt="Avatar">
+    <h1 id="name">Xin chào!</h1>
+    <p id="age">Tuổi: </p>
+    <p id="job">Nghề nghiệp: </p>
+    <ul id="hobbies"></ul>
+  </div>
 
-    <script>
-        const myInfo = {
-            name: "Nguyễn Văn A",
-            age: 25,
-            job: "Developer",
-            hobbies: ["Coding", "Reading", "Gaming"]
-        };
+<script>
+const myInfo = {
+  name: "Nguyễn Văn A",
+  age: 25,
+  job: "Developer",
+  hobbies: ["Coding", "Reading", "Gaming", "Music", "Travel"]
+};
 
-        function introduce() {
-            document.getElementById("name").innerText = `Xin chào! Mình là ${myInfo.name}`;
-            document.getElementById("age").innerText = `Tuổi: ${myInfo.age}`;
-            document.getElementById("job").innerText = `Nghề nghiệp: ${myInfo.job}`;
+document.getElementById("name").innerText = `Xin chào! Mình là ${myInfo.name}`;
+document.getElementById("age").innerText = `Tuổi: ${myInfo.age}`;
+document.getElementById("job").innerText = `Nghề nghiệp: ${myInfo.job}`;
 
-            const hobbiesList = document.getElementById("hobbies");
-            hobbiesList.innerHTML = ""; // Xoá nội dung cũ
-            myInfo.hobbies.forEach(hobby => {
-                const li = document.createElement("li");
-                li.textContent = hobby;
-                hobbiesList.appendChild(li);
-            });
-        }
-    </script>
+const hobbiesList = document.getElementById("hobbies");
+myInfo.hobbies.forEach(hobby => {
+  const li = document.createElement("li");
+  li.textContent = hobby;
+  hobbiesList.appendChild(li);
+});
+</script>
 </body>
 </html>
