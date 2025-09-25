@@ -3,68 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HovanPhat - Portfolio Siêu Xịn</title>
+<title>HovanPhat - Portfolio Ultimate</title>
 <style>
-body {
-    margin:0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x:hidden;
-    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
-    background-size: 600% 600%;
-    animation: gradientBG 15s ease infinite;
-    color:#fff;
-}
-@keyframes gradientBG{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+/* --- Reset cơ bản --- */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { overflow:hidden; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+
+/* --- Canvas background animation --- */
+#bgCanvas{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index:-1;
 }
 
+/* --- Container chính --- */
 .container{
-    max-width:900px;
+    max-width:1000px;
     margin:auto;
     padding:50px 20px;
     text-align:center;
+    color:#fff;
 }
 
+/* --- Heading --- */
 h1{
     font-size:3em;
-    margin-bottom:10px;
     color:#00ff99;
-    text-shadow: 0 0 10px #00ff99;
+    text-shadow:0 0 10px #00ff99;
     animation: glow 2s infinite alternate;
 }
 @keyframes glow{
     from{text-shadow:0 0 5px #00ff99;}
-    to{text-shadow:0 0 20px #00ff99;}
+    to{text-shadow:0 0 25px #00ff99;}
 }
 
+/* --- Rainbow text --- */
+.rainbow{
+    background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: rainbowAnim 5s linear infinite;
+}
+@keyframes rainbowAnim{
+    0%{background-position:0%;}
+    100%{background-position:100%;}
+}
+
+/* --- Intro typewriter --- */
 #intro{
     font-size:1.2em;
-    min-height:120px;
+    min-height:150px;
+    margin:20px 0;
     white-space:pre-wrap;
-    margin-bottom:30px;
 }
 
+/* --- Skills --- */
 .skills{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
-    margin-bottom:30px;
+    margin:30px 0;
 }
 .skill-card{
     background: rgba(255,255,255,0.1);
     margin:10px;
     padding:15px 25px;
     border-radius:15px;
-    cursor:default;
     transition: transform 0.3s, box-shadow 0.3s;
+    cursor:default;
 }
 .skill-card:hover{
     transform:translateY(-10px);
     box-shadow:0 0 20px #00ff99;
 }
 
+/* --- Projects --- */
 .projects{
     display:flex;
     flex-wrap:wrap;
@@ -84,13 +98,14 @@ h1{
     box-shadow:0 0 20px #ff9900;
 }
 
+/* --- Socials --- */
 .socials{
     margin-top:30px;
 }
 .socials a{
     margin:0 10px;
+    font-size:2em;
     color:#fff;
-    font-size:1.5em;
     transition: transform 0.3s, color 0.3s;
 }
 .socials a:hover{
@@ -98,21 +113,12 @@ h1{
     color:#00ff99;
 }
 
-button.close-btn{
-    background:#ff0000;
-    border:none;
-    color:#fff;
-    padding:5px 10px;
-    border-radius:5px;
-    cursor:pointer;
-    float:right;
-}
-
+/* --- Popup --- */
 .popup{
     position:fixed;
     top:0; left:0;
     width:100%; height:100%;
-    background:rgba(0,0,0,0.9);
+    background:rgba(0,0,0,0.95);
     display:none;
     justify-content:center;
     align-items:center;
@@ -124,21 +130,20 @@ button.close-btn{
     border-radius:15px;
     width:90%;
     max-width:500px;
-    position:relative;
     text-align:left;
+    position:relative;
+}
+button.close-btn{
+    background:#ff0000;
+    border:none;
+    color:#fff;
+    padding:5px 10px;
+    border-radius:5px;
+    cursor:pointer;
+    float:right;
 }
 
-.rainbow{
-    background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: rainbowAnim 3s linear infinite;
-}
-@keyframes rainbowAnim{
-    0%{background-position:0%;}
-    100%{background-position:100%;}
-}
-
+/* --- Responsive --- */
 @media(max-width:600px){
     h1{font-size:2em;}
     .project-card{width:150px;}
@@ -146,6 +151,8 @@ button.close-btn{
 </style>
 </head>
 <body>
+
+<canvas id="bgCanvas"></canvas>
 
 <div class="container">
     <h1 class="rainbow">HovanPhat</h1>
@@ -182,7 +189,7 @@ button.close-btn{
 </div>
 
 <script>
-// Typewriter effect
+// --- Typewriter effect ---
 const introLines = [
     "Xin chào, tôi là HovanPhat",
     "Cấp độ: Bậc thầy lập trình 💻",
@@ -192,9 +199,7 @@ const introLines = [
     "Sở thích: Code mọi lúc mọi nơi, khám phá công nghệ mới 🚀",
     "Hãy theo dõi tôi để cùng tạo ra những điều phi thường!"
 ];
-
 const introEl = document.getElementById("intro");
-
 async function typeWriter(text, el, delay=50){
     for(let i=0;i<text.length;i++){
         el.textContent += text.charAt(i);
@@ -202,7 +207,6 @@ async function typeWriter(text, el, delay=50){
     }
     el.textContent+='\n';
 }
-
 async function showIntro(){
     for(let line of introLines){
         await typeWriter(line,introEl,50);
@@ -210,10 +214,9 @@ async function showIntro(){
 }
 showIntro();
 
-// Popup projects
+// --- Popup ---
 const popup = document.getElementById("popup");
 const popupText = document.getElementById("popup-text");
-
 function showPopup(project){
     popup.style.display="flex";
     popupText.textContent="Thông tin dự án: "+project;
@@ -221,6 +224,51 @@ function showPopup(project){
 function closePopup(){
     popup.style.display="none";
 }
+
+// --- Background animation particles ---
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+const colors = ['#00ff99','#ff9900','#00ffff','#ff00ff'];
+
+class Particle{
+    constructor(){
+        this.x = Math.random()*canvas.width;
+        this.y = Math.random()*canvas.height;
+        this.radius = Math.random()*2+1;
+        this.color = colors[Math.floor(Math.random()*colors.length)];
+        this.vx = (Math.random()-0.5)*1.5;
+        this.vy = (Math.random()-0.5)*1.5;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+    update(){
+        this.x += this.vx;
+        this.y += this.vy;
+        if(this.x<0||this.x>canvas.width) this.vx*=-1;
+        if(this.y<0||this.y>canvas.height) this.vy*=-1;
+        this.draw();
+    }
+}
+for(let i=0;i<150;i++) particles.push(new Particle());
+function animate(){
+    ctx.fillStyle = "rgba(0,0,0,0.1)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>p.update());
+    requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 </script>
 
 </body>
