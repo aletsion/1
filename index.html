@@ -3,28 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>aletsion - Ultimate Portfolio</title>
+<title>HovanPhat - Ultimate Portfolio</title>
 <style>
-/* Reset cơ bản */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{overflow:hidden;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#000;color:#fff;}
+body{overflow:hidden;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#000;color:#fff;cursor:none;}
 canvas#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
-/* Container chính */
+/* Container */
 .container{max-width:1000px;margin:auto;padding:50px 20px;text-align:center;position:relative;z-index:1;}
-
-/* Heading */
 h1{font-size:3em;color:#0ff;text-shadow:0 0 10px #0ff,0 0 20px #0ff;animation:glow 2s infinite alternate;}
 @keyframes glow{0%{text-shadow:0 0 5px #0ff;}50%{text-shadow:0 0 20px #0ff,0 0 40px #0ff;}100%{text-shadow:0 0 5px #0ff;}}
-
-/* Rainbow text */
 .rainbow{background:linear-gradient(90deg,red,orange,yellow,green,cyan,blue,violet);-webkit-background-clip:text;color:transparent;animation:rainbowAnim 5s linear infinite;}
 @keyframes rainbowAnim{0%{background-position:0%;}100%{background-position:100%;}}
-
-/* Intro typewriter */
 #intro{font-size:1.2em;min-height:150px;margin:20px 0;white-space:pre-wrap;text-align:center;}
 
-/* Skills & Projects */
+/* Cards */
 .skills,.projects{display:flex;flex-wrap:wrap;justify-content:center;margin:30px 0;}
 .skill-card,.project-card{background: rgba(255,255,255,0.05);margin:10px;padding:20px;border-radius:15px;transition: all 0.3s;cursor:pointer;text-align:center;backdrop-filter:blur(5px);}
 .skill-card:hover{transform:translateY(-15px) rotateZ(5deg);box-shadow:0 0 25px #ff00ff;text-shadow:0 0 10px #ff0;}
@@ -40,6 +33,9 @@ h1{font-size:3em;color:#0ff;text-shadow:0 0 10px #0ff,0 0 20px #0ff;animation:gl
 .popup-content{background:#111;padding:20px;border-radius:15px;width:90%;max-width:500px;text-align:left;position:relative;box-shadow:0 0 25px #0ff;}
 button.close-btn{background:#f00;border:none;color:#fff;padding:5px 10px;border-radius:5px;cursor:pointer;float:right;}
 
+/* Cursor */
+#cursor{position:absolute;width:15px;height:15px;background:#0ff;border-radius:50%;pointer-events:none;mix-blend-mode:screen;box-shadow:0 0 10px #0ff;transition:transform 0.05s linear;}
+
 /* Responsive */
 @media(max-width:600px){h1{font-size:2em;}.project-card,.skill-card{width:150px;}}
 </style>
@@ -47,6 +43,7 @@ button.close-btn{background:#f00;border:none;color:#fff;padding:5px 10px;border-
 <body>
 
 <canvas id="bgCanvas"></canvas>
+<div id="cursor"></div>
 
 <div class="container">
 <h1 class="rainbow">HovanPhat</h1>
@@ -85,7 +82,7 @@ button.close-btn{background:#f00;border:none;color:#fff;padding:5px 10px;border-
 <script>
 // Typewriter intro
 const introLines=[
-"Xin chào, tôi là aletsion",
+"Xin chào, tôi là HovanPhat",
 "Cấp độ: Bậc thầy lập trình 💻",
 "Ngôn ngữ ưa thích: JavaScript, Python, C++",
 "Kỹ năng: AI, Bot Discord, Game, Web, Automation",
@@ -104,31 +101,29 @@ const popupText=document.getElementById("popup-text");
 function showPopup(project){popup.style.display="flex";popupText.textContent="Thông tin dự án: "+project;launchConfetti();}
 function closePopup(){popup.style.display="none";}
 
-// Background particles + confetti + sparkle
+// Background particles + confetti
 const canvas=document.getElementById("bgCanvas");
 const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
 let particles=[];
 const colors=['#0ff','#f0f','#ff0','#f00','#0f0','#00f'];
-
-class Particle{
-constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-0.5)*2;this.vy=(Math.random()-0.5)*2;this.radius=Math.random()*3+1;this.color=colors[Math.floor(Math.random()*colors.length)];this.alpha=Math.random()*0.5+0.5;}
+class Particle{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-0.5)*2;this.vy=(Math.random()-0.5)*2;this.radius=Math.random()*3+1;this.color=colors[Math.floor(Math.random()*colors.length)];this.alpha=Math.random()*0.5+0.5;}
 draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();}
-update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width)this.vx*=-1;if(this.y<0||this.y>canvas.height)this.vy*=-1;this.draw();}
-}
-for(let i=0;i<250;i++) particles.push(new Particle());
-
+update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width)this.vx*=-1;if(this.y<0||this.y>canvas.height)this.vy*=-1;this.draw();}}
+for(let i=0;i<300;i++) particles.push(new Particle());
 function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>p.update());requestAnimationFrame(animate);}
 animate();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-// Confetti khi popup mở
-function launchConfetti(){for(let i=0;i<100;i++){setTimeout(()=>{const c=new Particle();c.vx=(Math.random()-0.5)*5;c.vy=(Math.random()-1.5)*5;c.radius=Math.random()*4+2;particles.push(c);setTimeout(()=>{particles.splice(particles.indexOf(c),1);},3000);},i*10);}
+// Confetti
+function launchConfetti(){for(let i=0;i<100;i++){setTimeout(()=>{const c=new Particle();c.vx=(Math.random()-0.5)*5;c.vy=(Math.random()-1.5)*5;c.radius=Math.random()*4+2;particles.push(c);setTimeout(()=>{particles.splice(particles.indexOf(c),1);},3000);},i*10);}}
 
-// Light trails theo chuột
-let mouse={x:canvas.width/2,y:canvas.height/2};window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
-function trailParticles(){let t=new Particle();t.x=mouse.x;t.y=mouse.y;t.radius=Math.random()*2+1;t.vx=(Math.random()-0.5)*1;t.vy=(Math.random()-0.5)*1;particles.push(t);setTimeout(()=>{particles.splice(particles.indexOf(t),1);},1000);}setInterval(trailParticles,30);
+// Cursor follow
+const cursor=document.getElementById('cursor');
+let mouse={x:canvas.width/2,y:canvas.height/2};
+window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+function updateCursor(){cursor.style.transform=`translate(${mouse.x-7.5}px,${mouse.y-7.5}px)`;requestAnimationFrame(updateCursor);}
+updateCursor();
 </script>
 
 </body>
